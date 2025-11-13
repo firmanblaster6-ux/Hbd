@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Ups...</title>
+<style>
+body{margin:0;background:#000;color:#fff;font-family:Arial,Helvetica,sans-serif;text-align:center;padding-top:60px}
+#pocong{display:none;max-width:60vw;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.6)}
+#lanjutBtn{display:none;margin-top:20px;background:#ff4081;color:#fff;padding:12px 22px;border-radius:20px;border:none;cursor:pointer}
+#teksLanjut{display:none;margin-top:18px}
+</style>
+</head>
+<body>
+  <h2 id="textAwal">Tunggu sebentar...</h2>
+  <div>
+    <img id="pocong" src="img/pocong.png" alt="pocong">
+  </div>
+  <audio id="scream" src="sound/jumpscare.mp3"></audio>
+  <h3 id="teksLanjut">Maaf salah halaman 😅</h3>
+  <button id="lanjutBtn">Lanjut ➤</button>
+
+<script>
+const params = new URLSearchParams(location.search);
+const nama = params.get('nama') || '';
+const umur = params.get('umur') || '';
+const harapan = params.get('harapan') || '';
+
+// tampilkan pocong setelah 1s
+setTimeout(()=> {
+  document.getElementById('pocong').style.display = 'block';
+  // putar sound (note: autoplay sering diblokir, tapi saat user baru submit akan ada interaksi)
+  const s = document.getElementById('scream');
+  try { s.play(); } catch(e){}
+}, 1000);
+
+// hide lagi & show tombol setelah ~6s (1s delay + 5s jumpscare)
+setTimeout(()=> {
+  document.getElementById('pocong').style.display = 'none';
+  document.getElementById('textAwal').style.display = 'none';
+  document.getElementById('teksLanjut').style.display = 'block';
+  document.getElementById('lanjutBtn').style.display = 'inline-block';
+}, 6000);
+
+document.getElementById('lanjutBtn').addEventListener('click', ()=> {
+  // lanjut ke halaman kejutan, teruskan query string agar data tersedia
+  location.href = 'kejutan.html' + location.search;
+});
+</script>
+</body>
+</html>
